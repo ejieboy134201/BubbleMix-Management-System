@@ -41,7 +41,7 @@ class LoginPage:
     def __init__(self, master):
         self.master = master
         self.master.title("Login Page")
-        self.master.geometry("400x300")
+        self.master.geometry("700x500")
         
         # Create login form
         self.create_widgets()

@@ -126,16 +126,17 @@ class ManageItems(Frame):
             if row[7]:  # If there's an image stored
                 image = Image.open(io.BytesIO(row[7]))  # Convert BLOB to Image
                 image.thumbnail((50, 50))  # Resize image to fit in the table
-                image = ImageTk.PhotoImage(image)
+                photo_image = ImageTk.PhotoImage(image)
 
-                # Keep a reference to the image
-                self.image_refs[row[0]] = image  # row[0] is the item ID
+                # Keep a reference to the image to avoid garbage collection
+                self.image_refs[row[0]] = photo_image  # Store image reference by item ID
 
             # Insert values into the table
-            self.item_table.insert("", tk.END, values=(row[0], row[1], row[2], row[3], row[4], '', row[5], row[6]))  # Add '' for the image cell
+            self.item_table.insert("", tk.END, values=(row[0], row[1], row[2], row[3], row[4], '', row[5], row[6]))
 
-            # Update the image in the table after inserting the row
-            self.item_table.item(self.item_table.get_children()[-1], image=image if image else '')
+            # Attach the image to the newly inserted row
+            if image:
+                self.item_table.item(self.item_table.get_children()[-1], image=self.image_refs[row[0]])
 
 
 
