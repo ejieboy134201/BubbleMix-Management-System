@@ -16,6 +16,8 @@ class DatabaseManager:
                             (quantity, product_name))
         self.connection.commit()
 
+
+
     def get_inventory(self):
         self.cursor.execute('SELECT * FROM inventory')
         return self.cursor.fetchall()
